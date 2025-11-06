@@ -1,0 +1,11 @@
+data/*
+data/
+
+.ipynb_checkpoints/*
+.ipynb_checkpoints/
+
+real_datasets/
+real_datasets/*
+
+checkpoints/*
+checkpoints/
