@@ -9,3 +9,13 @@ real_datasets/*
 
 checkpoints/*
 checkpoints/
+
+build/
+build/*
+
+trash_classify.egg-info/
+trash_classify.egg-info/*
+
+.env
+
+.python-version

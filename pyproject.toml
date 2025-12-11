@@ -1,0 +1,67 @@
+[project]
+name = "trash-classify"
+version = "0.1.0"
+description = "Project for Raspberry Pi (CPU) and NVIDIA GPU (CUDA)"
+readme = "README.md"
+requires-python = ">=3.11"
+
+# --- Base Dependencies ---
+dependencies = [
+    "opencv-contrib-python>=4.12.0.88", 
+    # This marker prevents picamera2 from trying to install on your PC
+    "torch>=2.9.1", 
+    "torchvision>=0.24.1",
+    "kaggle==1.8.2",
+    "python-dotenv==1.2.1",
+    "torchmetrics",
+    "tensorboard",
+    "matplotlib",
+    "seaborn"
+]
+
+# (Optional) You can keep this group if you want to explicitly track GPU packages,
+# but the 'sources' logic below now handles the auto-switching.
+[project.optional-dependencies]
+gpu = [
+    "ipykernel",
+    "jupyter",
+    "ipywidgets"
+] 
+pi = [
+    "picamera2>=0.3.33; sys_platform == 'linux' and platform_machine == 'aarch64'", 
+]
+
+# --- UV Configuration ---
+# 1. Explicitly define the standard PyPI index so we can name it "pypi"
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
+default = true
+
+[[tool.uv.index]]
+name = "pytorch-cuda128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true 
+
+[tool.uv.sources]
+# LOGIC: 
+# If on PC (x86_64) -> Use Custom CUDA Index
+# If on Pi (aarch64) -> Marker fails -> Fallback to Default PyPI (CPU)
+torch = [
+    { index = "pytorch-cuda128", marker = "platform_machine == 'x86_64'" }
+]
+torchvision = [
+    { index = "pytorch-cuda128", marker = "platform_machine == 'x86_64'" }
+]
+
+# --- Build System Configuration ---
+# Explicitly declare setuptools so uv knows what backend to use
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# --- Package Discovery ---
+# Tell setuptools to look for code in the root, but ignore data/output folders
+[tool.setuptools.packages.find]
+where = ["."]  
+exclude = ["data*", "output*"]

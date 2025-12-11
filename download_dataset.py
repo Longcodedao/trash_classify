@@ -2,6 +2,10 @@ import requests
 import zipfile
 
 import os 
+import kaggle
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def download_file(url, dest_folder):
     try:
@@ -29,6 +33,20 @@ def download_file(url, dest_folder):
         print('Download failed:', e)
 
 
+def download_my_dataset(dataset_name, dest_folder):
+    try:
+        print("Authenticate Kaggle")
+        kaggle.api.authenticate()
+    
+        print(f"Download the dataset {dataset_name} to {dest_folder}")
+        kaggle.api.dataset_download_files(dataset_name, path=dest_folder, unzip=True)
+            
+        print(f'Download and extraction completed in: {dest_folder}')
+    except Exception as e:
+        print(f"Unexpected error has occured: {e}")
+    
+
+
 def unzip_file(zip_path, extract_to):
     try:
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
@@ -39,6 +57,13 @@ def unzip_file(zip_path, extract_to):
 
 
 if __name__ == "__main__":
+    dataset_slug = "long2003/binsity"
+    dest_folder = "./data/binsity"
+    # Create destination folder if it doesn't exist
+    os.makedirs(dest_folder, exist_ok=True)
+    download_my_dataset(dataset_slug, dest_folder)
+
+    
     url = "https://github.com/garythung/trashnet/raw/refs/heads/master/data/dataset-resized.zip"
     dest_folder = "./data"
 
