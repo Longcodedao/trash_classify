@@ -16,7 +16,8 @@ dependencies = [
     "torchmetrics",
     "tensorboard",
     "matplotlib",
-    "seaborn"
+    "seaborn",
+    "scikit-learn"
 ]
 
 # (Optional) You can keep this group if you want to explicitly track GPU packages,
@@ -25,7 +26,8 @@ dependencies = [
 gpu = [
     "ipykernel",
     "jupyter",
-    "ipywidgets"
+    "ipywidgets",
+    "plotly"
 ] 
 pi = [
     "picamera2>=0.3.33; sys_platform == 'linux' and platform_machine == 'aarch64'", 
