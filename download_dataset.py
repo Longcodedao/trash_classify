@@ -36,8 +36,6 @@ def download_file(url, dest_folder):
 def download_my_dataset(dataset_name, dest_folder):
     try:
         print("Authenticate Kaggle")
-        kaggle.api.authenticate()
-    
         print(f"Download the dataset {dataset_name} to {dest_folder}")
         kaggle.api.dataset_download_files(dataset_name, path=dest_folder, unzip=True)
             

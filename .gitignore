@@ -19,3 +19,6 @@ trash_classify.egg-info/*
 .env
 
 .python-version
+
+kfold_checkpoints/
+kfold_checkpoints/*
