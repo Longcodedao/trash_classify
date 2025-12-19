@@ -33,7 +33,7 @@ RESOLUTION_OPTIONS = [
     (1280, 720),
     (1920, 1080)
 ]
-FOLDER_IMG = '../images'
+FOLDER_IMG = '../../images'
 os.makedirs(FOLDER_IMG, exist_ok=True)
 
 # --- Transforms ---

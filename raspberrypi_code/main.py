@@ -4,7 +4,7 @@ from trash_detect import TrashDetector
 
 # --- CONFIGURATION ---
 SERIAL_PORT = "/dev/ttyUSB0" # Check your port!
-MODEL_PATH = "checkpoints/best_model_finetune.pth"
+MODEL_PATH = "../checkpoints/best_model_finetune.pth"
 
 def calculate_timeout(distance_cm):
     """
@@ -32,7 +32,7 @@ def main():
         arduino.send_command("R", timeout_duration = 30) 
         time.sleep(1)
         # Move forward to the Receiver 
-        arduino.send_command("D37 Forward", calculate_timeout(37)) 
+        arduino.send_command("D32 Forward", calculate_timeout(37)) 
         
         while True:
             print("\n" + "="*40)
@@ -60,15 +60,15 @@ def main():
                 
                 if detected_class in ['cardboard', 'paper']:
                     # Move to Paper Bin
-                    arduino.send_command("D37 Forward", calculate_timeout(37))
+                    arduino.send_command("D32 Forward", calculate_timeout(37))
                     
                 elif detected_class == 'plastic':
                     # Move to Plastic Bin
-                    arduino.send_command("D74 Forward", calculate_timeout(74))
+                    arduino.send_command("D64 Forward", calculate_timeout(74))
                     
                 elif detected_class in ['glass', 'metal']:
                     # Move to Glass/Metal Bin
-                    arduino.send_command("D115 Forward", calculate_timeout(115))
+                    arduino.send_command("D96 Forward", calculate_timeout(115))
                     
                 else: 
                     # 'trash' or unknown
@@ -87,7 +87,7 @@ def main():
                 # 8. Reset Cycle (Return to Receive Position)
                 print("\n[Step 5] Resetting to Receive Position...")
                 arduino.send_command("R", timeout_duration = 30)           # Re-home to ensure accuracy
-                arduino.send_command("D37 Forward", calculate_timeout(37)) # Go back to start
+                arduino.send_command("D32 Forward", calculate_timeout(37)) # Go back to start
                 
             else:
                 print("Invalid input. Please type 'yes' or 'q'.")

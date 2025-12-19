@@ -10,7 +10,7 @@ from picamera2 import Picamera2
 from collections import Counter
 
 class TrashDetector:
-    def __init__(self, checkpoint_path="checkpoints/best_model_finetune.pth"):
+    def __init__(self, checkpoint_path="../checkpoints/best_model_finetune.pth"):
         self.device = torch.device("cpu")
         self.labels = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
         self.confidence_threshold = 0.60
